@@ -1,4 +1,4 @@
-# senior_design_26-Scorpion
+# senior_design_27-scorpion
 Autonomous Ball-Sorting Robot for AVC 
 
 Current Design and Prototype:
