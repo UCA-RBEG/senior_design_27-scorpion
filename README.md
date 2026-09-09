@@ -1,5 +1,5 @@
 # senior_design_27-scorpion
-Autonomous Ball-Sorting Robot for AVC 
+Autonomous Ball-Sorting Robot for the 2027 Autonomous Vehicle Competition at ASGC
 
 Current Design and Prototype:
 
