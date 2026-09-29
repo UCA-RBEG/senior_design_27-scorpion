@@ -1,95 +1,115 @@
-# RUN ON LAPTOP / COMPUTER WITH KEYBOARD (NOT ON PICO)
+# RUN ON LAPTOP / SSH TO PI (NOT ON PICO)
 import serial
+import sys
+import termios
+import tty
+import select
 import time
-from pynput import keyboard
 
-# CHANGE THIS TO YOUR PICO COM PORT
-PORT = "COM5"
-
+PORT = "/dev/ttyACM0"
 BAUD = 115200
 
-ser = serial.Serial(PORT, BAUD, timeout=1)
+# If no repeated movement key arrives within this time,
+# automatically stop the robot.
+DEADMAN_TIMEOUT = 0.25
+
+ser = serial.Serial(PORT, BAUD, timeout=0.1)
 
 time.sleep(2)
 
-print("Connected to Pico")
 print()
-print("Controls:")
+print("ROBOT TELEOP")
+print("----------------")
 print("W = Forward")
 print("S = Backward")
 print("A = Left")
 print("D = Right")
-print("Release key = Stop")
-print("ESC = Exit")
+print("SPACE = Stop")
+print("Q = Quit")
+print()
+print("Hold a movement key to drive.")
+print("Releasing it automatically stops the robot.")
+print()
 
 
-current_key = None
+old_settings = termios.tcgetattr(sys.stdin)
 
+last_command_time = 0
+moving = False
 
-def send(command):
-    ser.write(command.encode())
+try:
 
+    tty.setcbreak(sys.stdin.fileno())
 
-def on_press(key):
-    global current_key
+    while True:
 
-    try:
-        char = key.char.lower()
+        # Check whether a keyboard character is available
+        readable, _, _ = select.select(
+            [sys.stdin],
+            [],
+            [],
+            0.02
+        )
 
-        # Prevent sending the same command hundreds
-        # of times from keyboard repeat
-        if char == current_key:
-            return
+        if readable:
 
-        if char == 'w':
-            send('w')
-            print("FORWARD")
+            key = sys.stdin.read(1).lower()
 
-        elif char == 's':
-            send('s')
-            print("BACKWARD")
+            if key == "w":
+                ser.write(b"w")
+                last_command_time = time.monotonic()
+                moving = True
 
-        elif char == 'a':
-            send('a')
-            print("LEFT")
+            elif key == "s":
+                ser.write(b"s")
+                last_command_time = time.monotonic()
+                moving = True
 
-        elif char == 'd':
-            send('d')
-            print("RIGHT")
+            elif key == "a":
+                ser.write(b"a")
+                last_command_time = time.monotonic()
+                moving = True
 
-        else:
-            return
+            elif key == "d":
+                ser.write(b"d")
+                last_command_time = time.monotonic()
+                moving = True
 
-        current_key = char
+            elif key == " ":
+                ser.write(b"x")
+                moving = False
+                print("\rSTOP        ", end="", flush=True)
 
-    except AttributeError:
-        pass
+            elif key == "q":
+                ser.write(b"x")
+                print("\nRobot stopped.")
+                break
 
+        # DEADMAN SWITCH
+        #
+        # If movement commands stop arriving,
+        # stop the motors automatically.
+        if moving:
 
-def on_release(key):
-    global current_key
+            if time.monotonic() - last_command_time > DEADMAN_TIMEOUT:
 
-    if key == keyboard.Key.esc:
-        send('x')
-        ser.close()
-        print("Stopped")
-        return False
+                ser.write(b"x")
+                moving = False
 
-    try:
-        char = key.char.lower()
+finally:
 
-        if char == current_key:
-            send('x')
-            current_key = None
-            print("STOP")
+    # Always attempt to stop robot when program exits
+    ser.write(b"x")
 
-    except AttributeError:
-        pass
+    termios.tcsetattr(
+        sys.stdin,
+        termios.TCSADRAIN,
+        old_settings
+    )
 
+    ser.close()
 
-with keyboard.Listener(
-    on_press=on_press,
-    on_release=on_release
+    print("Serial connection closed.")
 ) as listener:
 
     listener.join()
