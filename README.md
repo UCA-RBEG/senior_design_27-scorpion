@@ -2,6 +2,8 @@
 Autonomous Ball-Sorting Robot for the 2027 Autonomous Vehicle Competition at ASGC
 
 Equipment used for our robot 
+<img width="832" height="537" alt="image" src="https://github.com/user-attachments/assets/32d9b942-1cee-47c8-a5bc-380d8735a327" />
+
 
 Current Design and Prototype:
 
