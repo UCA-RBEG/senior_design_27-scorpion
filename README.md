@@ -7,7 +7,7 @@ Equipment used for our robot
 
 Current Design and Prototype:
 
-<img width="360" height="480" alt="image" src="https://github.com/user-attachments/assets/c5e7250b-b9ce-4c78-957e-37f707143833" />
+<img width="4284" height="5712" alt="IMG_0278" src="https://github.com/user-attachments/assets/a7f3b5b1-0e56-4587-8e92-bbdd4b6fc05b" />
 
-<img width="360" height="480" alt="image" src="https://github.com/user-attachments/assets/d933b89c-4956-4c6a-9df0-318e84ce02f7" />
+<img width="3024" height="4032" alt="IMG_3164 (1)" src="https://github.com/user-attachments/assets/637283d1-1bfd-4a6c-a44f-98f096f2916a" />
 
