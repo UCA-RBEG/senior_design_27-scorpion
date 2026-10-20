@@ -11,3 +11,5 @@ Current Design and Prototype:
 
 <img width="3024" height="4032" alt="IMG_3164 (1)" src="https://github.com/user-attachments/assets/637283d1-1bfd-4a6c-a44f-98f096f2916a" />
 
+<img width="3024" height="4032" alt="IMG_2199" src="https://github.com/user-attachments/assets/64762248-7895-4153-93a6-afa23e4d5393" />
+
