@@ -19,6 +19,5 @@ python3 keyboard_drive.py
 
 Current Design and Prototype:
 
-<img width="240" height="320" alt="Image-2" src="https://github.com/user-attachments/assets/167b0a3f-9180-4b33-a11b-cab0deb83e9c" />
+<img width="5712" height="4284" alt="IMG_2181" src="https://github.com/user-attachments/assets/14f6e630-e5ab-45d7-bc23-e8628d4ffbce" />
 
-<img width="240" height="320" alt="Image-3" src="https://github.com/user-attachments/assets/43790a7e-b5a4-4ac3-aeed-c5b7e578b2d7" />
